@@ -4,6 +4,7 @@ Dockerized dev environment using neovim and language server protocol
 
 - [x] LSP based autocomplete using pygls and lua completion-nvim
 - [x] Treesitter based semantic highlighting
+- [x] Treesitter based refactor - smart rename
 - [x] Tabnine based completions
 - [x] Various convenience plugins
 - [ ] Snippets
