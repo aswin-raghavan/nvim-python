@@ -1,6 +1,7 @@
 # nvim-python
 
 Dockerized dev environment using neovim and language server protocol
+This project supercedes [vim-python](https://gitlab.sarnoff.com/aswin.raghavan/vim-python)
 
 - [x] LSP based autocomplete using pygls and lua completion-nvim
 - [x] Treesitter based semantic highlighting
