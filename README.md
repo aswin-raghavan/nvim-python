@@ -8,3 +8,15 @@ Dockerized dev environment using neovim and language server protocol
 - [x] Various convenience plugins
 - [ ] Snippets
 - [ ] reduce lag by autoimport
+
+Build:
+```
+git clone <this repo>
+cd <this repo>
+docker build -t <img name> .
+docker run -ti --rm <img name>
+```
+
+Launch neovim using `nvim`
+Install plugins: `:PlugInstall` inside `nvim`
+
