@@ -94,7 +94,6 @@ ENV FZF_BASE=/root/.fzf
 RUN  python3.7 -m pip install tornado 'python-language-server[all]' powerline-status powerline-gitstatus ipython matplotlib ipykernel jupyter jupyter_console notedown pillow colorama seaborn flake8 flake8-mypy yapf doq isort rope pylint matplotlib jupyter-tensorboard opencv-python colorama sklearn opencv-python scikit-image tabulate pandas Pillow pytest tornado greenlet pynvim neovim jedi parso==0.7.0 jedi-language-server
 RUN if [[ -n "$GPU" ]] ; then  python3.7 -m pip  install  torch torchvision tensorflow-gpu==1.15.0 keras==2.3.0; else  python3.7 -m pip install  tensorflow==1.15.0 keras==2.3.0 torch==1.4.0+cpu torchvision==0.5.0+cpu -f https://download.pytorch.org/whl/torch_stable.html; fi
 RUN  python3.7 -m pip install  git+https://github.com/tensorflow/cleverhans.git#egg=cleverhans
-EXPOSE 8888
 
 # setup vim-plug
 WORKDIR /root
@@ -105,6 +104,7 @@ RUN mkdir /root/.config/nvim
 COPY init.vim /root/.config/nvim/init.vim
 RUN nvim +PlugInstall +qa
 WORKDIR /root
+EXPOSE 8888
 
 ENTRYPOINT [ "/bin/zsh" ]
 CMD ["-l"]

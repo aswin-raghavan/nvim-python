@@ -47,7 +47,7 @@ Plug 'dense-analysis/ale'
 
 " All of your Plugs must be added before the following line
 call plug#end()
-let g:python3_host_prog = '/Users/e29154/.pyenv/shims/python'
+let g:python3_host_prog = '/opt/alias/python'
 
 let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
 autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
@@ -62,7 +62,7 @@ let g:tex_flavor = 'latex'
 nmap s <Plug>(easymotion-overwin-f)
 " Turn on case insensitive feature
 let g:EasyMotion_smartcase = 1
-let g:pydocstring_doq_path = "/Users/e29154/.pyenv/shims/doq"
+let g:pydocstring_doq_path = "/usr/local/bin/doq"
 
 let g:airline_theme='gruvbox'
 let g:airline_powerline_fonts = 1
