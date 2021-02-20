@@ -7,15 +7,20 @@ Plug 'ncm2/ncm2-bufword'
 Plug 'ncm2/ncm2-path'
 
 Plug 'neovim/nvim-lspconfig'
-Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'christianchiarulli/nvcode-color-schemes.vim'
+Plug 'mfussenegger/nvim-dap'
+Plug 'mfussenegger/nvim-dap-python'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-refactor'
+Plug 'theHamsta/nvim-dap-virtual-text'
 
 " Plug 'nvim-lua/completion-nvim'
 " Plug 'aca/completion-tabnine', { 'do': './install.sh' }
 
 Plug 'scrooloose/nerdtree'
 
-Plug 'majutsushi/tagbar'
+" Plug 'majutsushi/tagbar'
+Plug 'liuchengxu/vista.vim'
 
 Plug 'junegunn/fzf', {'dir': '~/.fzf'}
 Plug 'junegunn/fzf.vim'
@@ -34,7 +39,7 @@ Plug 'heavenshell/vim-pydocstring'
 
 Plug 'ryanoasis/vim-devicons'
 
-Plug 'morhetz/gruvbox'
+" Plug 'morhetz/gruvbox'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
@@ -47,12 +52,57 @@ Plug 'dense-analysis/ale'
 
 " All of your Plugs must be added before the following line
 call plug#end()
-let g:python3_host_prog = '/Users/e29154/.pyenv/shims/python'
+let g:python3_host_prog = '/opt/alias/python'
+
+lua require('dap-python').setup('python')
+lua require('dap-python').test_runner = 'pytest'
+
+nnoremap <leader>dc :lua require'dap'.continue()<CR>
+nnoremap <leader>ds :lua require'dap'.step_over()<CR>
+nnoremap <leader>dsi :lua require'dap'.step_into()<CR>
+nnoremap <leader>dso :lua require'dap'.step_out()<CR>
+nnoremap <leader>db :lua require'dap'.toggle_breakpoint()<CR>
+nnoremap <leader>dro :lua require'dap'.repl.open()<CR>
+nnoremap <leader>drc :lua require'dap'.repl.run_last()<CR>
+
+function! NearestMethodOrFunction() abort
+  return get(b:, 'vista_nearest_method_or_function', '')
+endfunction
+
+set statusline+=%{NearestMethodOrFunction()}
+
+" Executive used when opening vista sidebar without specifying it.
+" See all the avaliable executives via `:echo g:vista#executives`.
+let g:vista_default_executive = 'nvim_lsp'
+
+" How each level is indented and what to prepend.
+" This could make the display more compact or more spacious.
+" e.g., more compact: ["▸ ", ""]
+" Note: this option only works the LSP executives, doesn't work for `:Vista ctags`.
+let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
+
+" To enable fzf's preview window set g:vista_fzf_preview.
+" The elements of g:vista_fzf_preview will be passed as arguments to fzf#vim#with_preview()
+" For example:
+let g:vista_fzf_preview = ['right:50%']
+
+" Set the executive for some filetypes explicitly. Use the explicit executive
+" instead of the default one for these filetypes when using `:Vista` without
+" specifying the executive.
+let g:vista_executive_for = { 'vim': 'ctags' }
+
+" By default vista.vim never run if you don't call it explicitly.
+"
+" If you want to show the nearest function in your statusline automatically,
+" you can add the following line to your vimrc
+autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
+
+let g:dap_virtual_text = 'all_frames'
 
 let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
 autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-let g:tagbar_autopreview = 1
-autocmd BufEnter * nested :call tagbar#autoopen(1)
+" let g:tagbar_autopreview = 1
+" autocmd BufEnter * nested :call tagbar#autoopen(1)
 let g:fzf_tags_command = 'ctags -R'
 map <leader>o :FZF<CR>
 nmap <leader>f :Tags<CR>
@@ -64,7 +114,7 @@ nmap s <Plug>(easymotion-overwin-f)
 let g:EasyMotion_smartcase = 1
 let g:pydocstring_doq_path = "/Users/e29154/.pyenv/shims/doq"
 
-let g:airline_theme='gruvbox'
+let g:airline_theme='onedark'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 
@@ -83,7 +133,7 @@ let g:ale_completion_enabled = 0
 " require'nvim_lsp'.pyls.setup{on_attach=require'completion'.on_attach}
 " require'nvim_lsp'.jedi_language_server.setup{}
 " require'nvim_lsp'.jedi_language_server.setup{on_attach=require'completion'.on_attach}
-silent! lua << EOF
+lua << EOF
 require'nvim_lsp'.jedi_language_server.setup{}
 EOF
 
@@ -103,7 +153,7 @@ EOF
 " " sort by tabnine score (default: 0)
 " let g:completion_tabnine_sort_by_details=1
 
-silent! lua << EOF
+lua << EOF
 require'nvim-treesitter.configs'.setup {
   ensure_installed = "all",
   highlight = {
@@ -112,7 +162,7 @@ require'nvim-treesitter.configs'.setup {
 }
 EOF
 
-silent! lua <<EOF
+lua <<EOF
 require'nvim-treesitter.configs'.setup {
   refactor = {
     highlight_definitions = { enable = true },
@@ -171,8 +221,8 @@ let g:jedi#goto_command = "<leader>g"
 let g:jedi#goto_assignments_command = "<leader>a"
 let g:jedi#goto_stubs_command = "<leader>s"
 let g:jedi#goto_definitions_command = "<leader>d"
-let g:jedi#usages_command = "<leader>n"
-let g:jedi#rename_command = "<leader>r"
+let g:jedi#usages_command = "<leader>us"
+let g:jedi#rename_command = "<leader>rn"
 
 " Use <Tab> and <S-Tab> to navigate through popup menu
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
@@ -208,9 +258,15 @@ filetype plugin indent on    " required
 set t_ut=
 set t_Co=256
 set background=dark
-silent! colorscheme gruvbox
-"
+let g:nvcode_termcolors=256
 syntax on
+colorscheme onedark
+" checks if your terminal has 24-bit color support
+if (has("termguicolors"))
+    set termguicolors
+    hi LineNr ctermbg=NONE guibg=NONE
+endif
+"
 "
 set number relativenumber
 "
@@ -242,10 +298,10 @@ set cmdheight=2
 " diagnostics appear/become resolved.
 set signcolumn=yes
 "
-nnoremap <leader>b :Buffers<CR>
+nnoremap <leader>bu :Buffers<CR>
 map <leader>e :NERDTreeToggle<CR>
 nnoremap <leader>u :UndotreeToggle<CR>
-nmap <leader>t :TagbarToggle<CR>
+nmap <leader>t :Vista!!<CR>
 nmap <leader>- <Plug>(pydocstring)
 "
 set updatetime=250
