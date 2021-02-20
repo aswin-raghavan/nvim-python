@@ -13,13 +13,8 @@ Plug 'mfussenegger/nvim-dap-python'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-refactor'
 Plug 'theHamsta/nvim-dap-virtual-text'
-
-" Plug 'nvim-lua/completion-nvim'
-" Plug 'aca/completion-tabnine', { 'do': './install.sh' }
-
 Plug 'scrooloose/nerdtree'
 
-" Plug 'majutsushi/tagbar'
 Plug 'liuchengxu/vista.vim'
 
 Plug 'junegunn/fzf', {'dir': '~/.fzf'}
@@ -39,16 +34,10 @@ Plug 'heavenshell/vim-pydocstring'
 
 Plug 'ryanoasis/vim-devicons'
 
-" Plug 'morhetz/gruvbox'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
 Plug 'dense-analysis/ale'
-
-" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-" Plug 'tbodt/deoplete-tabnine', { 'do': './install.sh' }
-" " Plug 'Shougo/deoplete-lsp'
-" Plug 'deoplete-plugins/deoplete-jedi'
 
 " All of your Plugs must be added before the following line
 call plug#end()
@@ -112,7 +101,7 @@ let g:tex_flavor = 'latex'
 nmap s <Plug>(easymotion-overwin-f)
 " Turn on case insensitive feature
 let g:EasyMotion_smartcase = 1
-let g:pydocstring_doq_path = "/Users/e29154/.pyenv/shims/doq"
+let g:pydocstring_doq_path = "/usr/local/bin/doq"
 
 let g:airline_theme='onedark'
 let g:airline_powerline_fonts = 1
