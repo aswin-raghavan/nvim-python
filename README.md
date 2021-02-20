@@ -2,15 +2,17 @@
 
 Dockerized dev environment using neovim and language server protocol.
 
-This project supercedes [vim-python](https://gitlab.sarnoff.com/aswin.raghavan/vim-python)
 
 - [x] LSP based autocomplete using pygls and lua completion-nvim
 - [x] Treesitter based semantic highlighting
 - [x] Treesitter based refactor - smart rename
-- [x] Tabnine based completions
+- [ ] Tabnine based completions (Removed)
 - [x] Various convenience plugins
 - [ ] Snippets
-- [ ] reduce lag by autoimport
+- [x] Various deep learning packages
+- [x] Debugger support for python: run/debug python code within nvim
+- [x] Breakpoints, step in, step over, virtual text updates values of variables
+
 
 Build:
 ```
@@ -23,4 +25,3 @@ docker run -ti --rm <img name>
 Launch neovim using `nvim`
 
 (Optional) Install plugins: `:PlugInstall` inside `nvim`
-
