@@ -41,10 +41,11 @@ Plug 'dense-analysis/ale'
 
 " All of your Plugs must be added before the following line
 call plug#end()
+
 let g:python3_host_prog = '/opt/alias/python'
 
-lua require('dap-python').setup('python')
-lua require('dap-python').test_runner = 'pytest'
+silent! lua require('dap-python').setup('python')
+silent! lua require('dap-python').test_runner = 'pytest'
 
 nnoremap <leader>dc :lua require'dap'.continue()<CR>
 nnoremap <leader>ds :lua require'dap'.step_over()<CR>
@@ -122,8 +123,8 @@ let g:ale_completion_enabled = 0
 " require'nvim_lsp'.pyls.setup{on_attach=require'completion'.on_attach}
 " require'nvim_lsp'.jedi_language_server.setup{}
 " require'nvim_lsp'.jedi_language_server.setup{on_attach=require'completion'.on_attach}
-lua << EOF
-require'nvim_lsp'.jedi_language_server.setup{}
+silent! lua << EOF
+require'lspconfig'.jedi_language_server.setup{}
 EOF
 
 " let g:completion_chain_complete_list = {
@@ -142,7 +143,7 @@ EOF
 " " sort by tabnine score (default: 0)
 " let g:completion_tabnine_sort_by_details=1
 
-lua << EOF
+silent! lua << EOF
 require'nvim-treesitter.configs'.setup {
   ensure_installed = "all",
   highlight = {
@@ -151,7 +152,7 @@ require'nvim-treesitter.configs'.setup {
 }
 EOF
 
-lua <<EOF
+silent! lua <<EOF
 require'nvim-treesitter.configs'.setup {
   refactor = {
     highlight_definitions = { enable = true },
@@ -186,7 +187,7 @@ require'nvim-treesitter.configs'.setup {
 EOF
 
 " ncm2 settings
-autocmd BufEnter * call ncm2#enable_for_buffer()
+" autocmd BufEnter * call ncm2#enable_for_buffer()
 " make it fast
 let ncm2#popup_delay = 5
 let ncm2#complete_length = [[1, 1]]
@@ -249,7 +250,7 @@ set t_Co=256
 set background=dark
 let g:nvcode_termcolors=256
 syntax on
-colorscheme onedark
+silent! colorscheme onedark
 " checks if your terminal has 24-bit color support
 if (has("termguicolors"))
     set termguicolors
