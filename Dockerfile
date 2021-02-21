@@ -42,7 +42,7 @@ RUN /tmp/zsh-in-docker.sh \
     -p https://github.com/zsh-users/zsh-completions \
     -p https://github.com/zsh-users/zsh-history-substring-search \
     -p https://github.com/zsh-users/zsh-syntax-highlighting \
-    -p 'history-substring-search'
+    -p 'history-substring-search' 
 RUN chsh -s /bin/zsh
 SHELL ["/bin/zsh", "-lc"]
 RUN exec /bin/zsh
@@ -56,8 +56,7 @@ RUN apt-get install -y software-properties-common make autoconf automake \
     cmake pkg-config unzip make build-essential libssl-dev zlib1g-dev  \
     libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev \
     xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
-RUN add-apt-repository ppa:neovim-ppa/unstable
-RUN apt-get install -y python3.7 python3.7-dev neovim
+RUN apt-get install -y python3.7 python3.7-dev 
 RUN curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 RUN python3.7 get-pip.py
 RUN python3.7 -V && pip3 -V
@@ -72,6 +71,14 @@ RUN python3 -V && pip3 -V
 RUN which python3.7
 RUN python -V && pip -V
 RUN which python
+
+RUN curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage
+RUN chmod u+x nvim.appimage
+RUN ./nvim.appimage --appimage-extract
+RUN ./squashfs-root/usr/bin/nvim --version
+RUN mv squashfs-root / && ln -s /squashfs-root/AppRun /usr/bin/nvim
+RUN nvim --version
+
 
 #Install FZF
 RUN curl -L https://github.com/sharkdp/fd/releases/download/v8.0.0/fd_8.0.0_amd64.deb > fd_8.0.0_amd64.deb
@@ -91,19 +98,23 @@ ENV FZF_CTRL_T_OPTS="--preview '[[ $(file --mime {}) =~ binary ]] && \
                 cat {}) 2> /dev/null | head -500'"
 ENV FZF_BASE=/root/.fzf
 
-RUN python3.7 -m pip install tornado 'python-language-server[all]' powerline-status powerline-gitstatus ipykernel jupyter jupyter_console notedown pillow  seaborn flake8 flake8-mypy yapf doq isort rope pylint jupyter-tensorboard   sklearn  scikit-image pandas Pillow pytest tornado greenlet pynvim neovim jedi parso==0.7.0 jedi-language-server debugpy rich matplotlib opencv-python ipython setuptools beautifulsoup4 colorama cython hickle image-classifiers==1.0.0b1 imageio imagesize lxml  numpy==1.16.4 requests scikit-learn tabulate tqdm wget xmltodict xxhash
+RUN python3.7 -m pip install tornado 'python-language-server[all]' powerline-status powerline-gitstatus ipykernel jupyter jupyter_console notedown pillow  seaborn flake8 flake8-mypy yapf doq isort rope pylint sklearn  scikit-image pandas Pillow pytest tornado greenlet pynvim neovim jedi parso==0.7.0 jedi-language-server debugpy rich matplotlib opencv-python ipython setuptools beautifulsoup4 colorama cython hickle image-classifiers==1.0.0b1 imageio imagesize lxml  numpy==1.16.4 requests scikit-learn tabulate tqdm wget xmltodict xxhash
 
 RUN if [[ -n "$GPU" ]] ; then  python3.7 -m pip  install  torch torchvision tensorflow-gpu==1.15.0 keras==2.3.0; else  python3.7 -m pip install  tensorflow==1.15.0 keras==2.3.0 torch==1.4.0+cpu torchvision==0.5.0+cpu -f https://download.pytorch.org/whl/torch_stable.html; fi
 RUN  python3.7 -m pip install  git+https://github.com/tensorflow/cleverhans.git#egg=cleverhans
 
 # setup vim-plug
 WORKDIR /root
+RUN pwd
 ENV XDG_CONFIG_HOME=/root/.config
 RUN sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 RUN mkdir /root/.config
 RUN mkdir /root/.config/nvim
+RUN pwd
 COPY init.vim /root/.config/nvim/init.vim
-RUN nvim +PlugInstall +qa
+RUN nvim --headless +PlugInstall +qall
+RUN nvim --headless +PlugInstall +qall
+
 WORKDIR /root
 EXPOSE 8888
 
