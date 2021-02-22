@@ -187,12 +187,13 @@ require'nvim-treesitter.configs'.setup {
 EOF
 
 " ncm2 settings
-" autocmd BufEnter * call ncm2#enable_for_buffer()
+silent! autocmd BufEnter * call ncm2#enable_for_buffer()
 " make it fast
 let ncm2#popup_delay = 5
 let ncm2#complete_length = [[1, 1]]
 " Use new fuzzy based matches
 let g:ncm2#matcher = 'substrfuzzy'
+inoremap <c-c> <ESC>
 
 " Disable Jedi-vim autocompletion and enable call-signatures options
 let g:jedi#auto_initialization = 1
