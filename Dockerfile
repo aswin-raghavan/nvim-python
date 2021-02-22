@@ -105,12 +105,10 @@ RUN  python3.7 -m pip install  git+https://github.com/tensorflow/cleverhans.git#
 
 # setup vim-plug
 WORKDIR /root
-RUN pwd
 ENV XDG_CONFIG_HOME=/root/.config
 RUN sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 RUN mkdir /root/.config
 RUN mkdir /root/.config/nvim
-RUN pwd
 COPY init.vim /root/.config/nvim/init.vim
 RUN nvim --headless +PlugInstall +qall
 RUN nvim --headless +PlugInstall +qall
