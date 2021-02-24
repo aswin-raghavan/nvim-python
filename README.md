@@ -43,6 +43,9 @@ Launch neovim using `nvim`
 
 (Optional) Install plugins: `:PlugInstall` inside `nvim`
 
+## TMUX
+Does not seem to work well with TMUX currently --- TODO
+
 ## Keybindings
 TODO
 
