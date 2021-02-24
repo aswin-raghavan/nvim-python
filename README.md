@@ -43,6 +43,9 @@ Launch neovim using `nvim`
 
 (Optional) Install plugins: `:PlugInstall` inside `nvim`
 
+## Keybindings
+TODO
+
 ## Screenshots
 By default, `<leader>` is `\` (e.g., `<leader>k` is `\k`)
 
