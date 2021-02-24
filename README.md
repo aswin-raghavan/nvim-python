@@ -46,6 +46,9 @@ Launch neovim using `nvim`
 ## Keybindings
 TODO
 
+## Colorscheme
+TODO
+
 ## Screenshots
 By default, `<leader>` is `\` (e.g., `<leader>k` is `\k`)
 
